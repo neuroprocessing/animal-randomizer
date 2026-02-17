@@ -10,7 +10,8 @@ authors:
   - family-names: "Mirzakhani"
     given-names: "Ali"
     affiliation: "Neuroprocessing | Open Neuroscience Systems Lab"
-    email: "neuroprocessing@gmail.com"
+    emails: "amirzakhani7@yahoo.com"
+			"neuroprocessing@gmail.com"
 
 repository-code: "https://github.com/neuroprocessing/animal-randomizer"
 url: "https://github.com/neuroprocessing/animal-randomizer"
