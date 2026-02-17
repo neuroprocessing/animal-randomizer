@@ -1,0 +1,28 @@
+```yaml
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it."
+title: "Animal Randomizer"
+version: 0.1.0
+date-released: 2026-02-17
+type: software
+
+authors:
+  - family-names: "Mirzakhani"
+    given-names: "Ali"
+    affiliation: "Neuroprocessing | Open Neuroscience Systems Lab"
+    email: "neuroprocessing@gmail.com"
+
+repository-code: "https://github.com/neuroprocessing/animal-randomizer"
+url: "https://github.com/neuroprocessing/animal-randomizer"
+
+keywords:
+  - neuroscience
+  - animal studies
+  - rodent experiments
+  - randomization
+  - reproducibility
+  - experimental design
+  - behavioral neuroscience
+  - open science
+
+license: MIT

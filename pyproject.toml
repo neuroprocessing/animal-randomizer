@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "animal-randomizer"
+version = "0.1.0"
+description = "Reproducible random group assignment for animal studies (rodent neuroscience workflows)."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+
+authors = [
+  { name="Ali Mirzakhani", email="lab@neuroprocessing.org" }
+]
+
+keywords = [
+  "neuroscience",
+  "animal studies",
+  "randomization",
+  "rodent",
+  "reproducibility",
+  "experimental design"
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering",
+]
+
+dependencies = [
+  "pandas>=2.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/neuroprocessing/animal-randomizer"
+Repository = "https://github.com/neuroprocessing/animal-randomizer"
+Issues = "https://github.com/neuroprocessing/animal-randomizer/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
