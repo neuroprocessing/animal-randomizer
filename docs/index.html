@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Animal Randomizer | Neuroprocessing</title>
+  <meta name="description" content="Animal Randomizer is an open-source tool for reproducible random group assignment in animal studies (rats/mice). Developed by Neuroprocessing." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #05070d;
+      --panel: rgba(255, 255, 255, 0.04);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.68);
+      --muted2: rgba(255, 255, 255, 0.50);
+      --blue: #4da3ff;
+      --blue-glow: rgba(77, 163, 255, 0.35);
+      --mono: "JetBrains Mono", monospace;
+      --sans: "IBM Plex Sans", sans-serif;
+      --serif: "IBM Plex Serif", serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--sans);
+      background: radial-gradient(circle at 30% 20%, rgba(77, 163, 255, 0.18), transparent 60%),
+                  radial-gradient(circle at 70% 80%, rgba(77, 163, 255, 0.10), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand strong {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .brand span {
+      font-size: 0.9rem;
+      color: var(--muted2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 10px;
+      transition: 0.25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .cta {
+      background: rgba(77, 163, 255, 0.14);
+      border: 1px solid rgba(77, 163, 255, 0.35);
+      color: var(--text);
+      font-weight: 500;
+      box-shadow: 0 0 22px rgba(77, 163, 255, 0.15);
+    }
+
+    .cta:hover {
+      background: rgba(77, 163, 255, 0.20);
+      box-shadow: 0 0 28px rgba(77, 163, 255, 0.25);
+    }
+
+    .hero {
+      padding: 90px 0 50px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      color: rgba(77, 163, 255, 0.85);
+      letter-spacing: 0.6px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: 2.7rem;
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .lede {
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.03);
+      color: rgba(255, 255, 255, 0.78);
+      transition: 0.3s;
+    }
+
+    .pill:hover {
+      border-color: rgba(77, 163, 255, 0.4);
+      box-shadow: 0 0 18px rgba(77, 163, 255, 0.20);
+      transform: translateY(-1px);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.04);
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(77, 163, 255, 0.35);
+      box-shadow: 0 0 22px rgba(77, 163, 255, 0.18);
+    }
+
+    .btn-primary {
+      background: rgba(77, 163, 255, 0.16);
+      border: 1px solid rgba(77, 163, 255, 0.38);
+    }
+
+    .panel {
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid var(--panel-border);
+      background: var(--panel);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background: radial-gradient(circle, rgba(77, 163, 255, 0.18), transparent 60%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .panel h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel li {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .panel li strong {
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 40px 0;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.03);
+      transition: 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: rgba(77, 163, 255, 0.45);
+      box-shadow: 0 0 24px rgba(77, 163, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.92rem;
+      padding: 3px 6px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    pre {
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(0, 0, 0, 0.35);
+      overflow-x: auto;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.95rem;
+      margin-top: 40px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 2.1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <strong>Animal Randomizer</strong>
+      <span>Neuroprocessing Open Tool</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="https://github.com/neuroprocessing/animal-randomizer" target="_blank">GitHub</a>
+      <a href="#install">Install</a>
+      <a href="#usage">Usage</a>
+      <a href="#roadmap">Roadmap</a>
+      <a class="cta" href="https://github.com/neuroprocessing/animal-randomizer/releases" target="_blank">Releases</a>
+    </div>
+  </div>
+</header>
+
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+
+      <div class="fade-in">
+        <p class="eyebrow">OPEN-SOURCE • REPRODUCIBLE • PUBLICATION-READY</p>
+
+        <h1>Reproducible random group assignment for animal studies.</h1>
+
+        <p class="lede">
+          <strong>Animal Randomizer</strong> is a lightweight open-source tool for generating
+          transparent and seed-based randomization tables for rodent experiments (rats/mice).
+          Built by <strong>Neuroprocessing</strong> for modern reproducible neuroscience workflows.
+        </p>
+
+        <div class="pill-row">
+          <span class="pill">Rodent Studies</span>
+          <span class="pill">Seed Reproducibility</span>
+          <span class="pill">CSV Export</span>
+          <span class="pill">Publication-Ready Tables</span>
+          <span class="pill">CLI Tool</span>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/neuroprocessing/animal-randomizer" target="_blank">
+            View Repository →
+          </a>
+          <a class="btn" href="https://github.com/neuroprocessing/animal-randomizer/issues" target="_blank">
+            Report Issue
+          </a>
+          <a class="btn" href="#usage">
+            Quick Start ↓
+          </a>
+        </div>
+      </div>
+
+      <aside class="panel fade-in">
+        <h2>Scientific Motivation</h2>
+        <ul>
+          <li><strong>Bias reduction:</strong> controlled random group allocation.</li>
+          <li><strong>Reproducibility:</strong> seed-based and audit-friendly outputs.</li>
+          <li><strong>Transparency:</strong> ready for supplementary materials.</li>
+          <li><strong>Lab usability:</strong> minimal dependencies, fast workflow.</li>
+        </ul>
+      </aside>
+
+    </div>
+  </section>
+
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Core Features</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Seed-Based Reproducibility</h3>
+          <p>Same seed → same allocation. Fully auditable for papers and replication studies.</p>
+        </div>
+
+        <div class="card">
+          <h3>Balanced Group Allocation</h3>
+          <p>Automatic distribution ensures balanced sample sizes across groups.</p>
+        </div>
+
+        <div class="card">
+          <h3>CSV Export</h3>
+          <p>Export publication-ready tables for lab notebooks, Excel, or manuscript supplements.</p>
+        </div>
+
+        <div class="card">
+          <h3>Custom Group Names</h3>
+          <p>Use meaningful labels like <code>Control</code>, <code>DrugA</code>, <code>DrugB</code>.</p>
+        </div>
+
+        <div class="card">
+          <h3>CLI Workflow</h3>
+          <p>Designed for real lab use: fast execution and clean outputs.</p>
+        </div>
+
+        <div class="card">
+          <h3>Roadmap Extensions</h3>
+          <p>Block randomization, stratification (weight/age), GUI, PDF reports.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- INSTALL -->
+  <section class="section" id="install">
+    <div class="container fade-in">
+      <h2 class="section-title">Installation</h2>
+
+      <pre>
+git clone https://github.com/neuroprocessing/animal-randomizer.git
+cd animal-randomizer
+pip install -r requirements.txt
+      </pre>
+
+      <p style="margin-top:12px; color: rgba(255,255,255,0.65); line-height:1.7;">
+        In future versions, Animal Randomizer will support installation via <code>pip install animal-randomizer</code>.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- USAGE -->
+  <section class="section" id="usage">
+    <div class="container fade-in">
+      <h2 class="section-title">Quick Start</h2>
+
+      <pre>
+python -m animal_randomizer.cli --n 24 --groups 2 --seed 42 --out output.csv
+      </pre>
+
+      <p style="margin-top:14px; color: rgba(255,255,255,0.68); line-height:1.7;">
+        This generates a reproducible randomization table containing animal IDs, group labels,
+        seed, timestamp, and method metadata.
+      </p>
+
+      <pre>
+python -m animal_randomizer.cli --n 30 --groups 3 \
+  --names Control,DrugA,DrugB \
+  --seed 123 \
+  --out study.csv
+      </pre>
+    </div>
+  </section>
+
+
+  <!-- OUTPUT -->
+  <section class="section">
+    <div class="container fade-in">
+      <h2 class="section-title">Output Format</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Animal_ID</h3>
+          <p>Automatically generated IDs such as <code>RAT_001</code>.</p>
+        </div>
+
+        <div class="card">
+          <h3>Group</h3>
+          <p>Assigned experimental group label.</p>
+        </div>
+
+        <div class="card">
+          <h3>Seed + Timestamp</h3>
+          <p>Ensures reproducibility and transparent reporting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ROADMAP -->
+  <section class="section" id="roadmap">
+    <div class="container fade-in">
+      <h2 class="section-title">Roadmap</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Block Randomization</h3>
+          <p>Improved balance over time and across acquisition sessions.</p>
+        </div>
+
+        <div class="card">
+          <h3>Stratified Randomization</h3>
+          <p>Randomization based on weight, age, baseline behavior, or biomarker values.</p>
+        </div>
+
+        <div class="card">
+          <h3>GUI Application (PyQt6)</h3>
+          <p>Simple interface for lab technicians and experimental staff.</p>
+        </div>
+
+        <div class="card">
+          <h3>PDF Report Export</h3>
+          <p>Paper-ready randomization reports for IRB / ethics submission and supplements.</p>
+        </div>
+
+        <div class="card">
+          <h3>Excel Export</h3>
+          <p>Direct export to <code>.xlsx</code> for wet lab teams and study tracking.</p>
+        </div>
+
+        <div class="card">
+          <h3>Integration into Study Manager</h3>
+          <p>Future integration into Neuroprocessing animal study management suite.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER CTA -->
+  <section class="section">
+    <div class="container fade-in">
+      <div class="panel">
+        <h2>Developed by Neuroprocessing</h2>
+        <p style="color: rgba(255,255,255,0.72); line-height: 1.7; margin-top: 10px;">
+          Animal Randomizer is part of the Neuroprocessing open-science ecosystem,
+          built for transparent experimental neuroscience.
+        </p>
+
+        <div class="hero-actions" style="margin-top: 18px;">
+          <a class="btn btn-primary" href="https://github.com/neuroprocessing/animal-randomizer/releases" target="_blank">
+            View Releases →
+          </a>
+          <a class="btn" href="https://github.com/neuroprocessing/animal-randomizer/blob/main/CITATION.cff" target="_blank">
+            Citation File
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<footer>
+  <div class="container">
+    <p>
+      © 2026 Neuroprocessing | Animal Randomizer is released under the MIT License.
+      <br />
+      Maintainer: Ali Mirzakhani • Open Neuroscience Systems Lab
+    </p>
+  </div>
+</footer>
+
+
+<script>
+  // Fade-in animation on scroll
+  const fadeElements = document.querySelectorAll(".fade-in");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.12 });
+
+  fadeElements.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
