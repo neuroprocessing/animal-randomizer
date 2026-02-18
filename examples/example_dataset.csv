@@ -1,0 +1,13 @@
+Animal ID,Sex,Weight,Age,Cage,Strain,Species,Condition/Notes,Source,Date of arrival
+RAT_001,M,245,10,C1,Wistar,Rat,na,VendorA,2026-02-01
+RAT_002,F,238,11,C1,Wistar,Rat,na,VendorA,2026-02-01
+RAT_003,M,252,12,C2,Wistar,Rat,na,VendorA,2026-02-01
+RAT_004,F,241,10,C2,Wistar,Rat,na,VendorA,2026-02-01
+RAT_005,M,247,11,C3,Wistar,Rat,na,VendorA,2026-02-01
+RAT_006,F,239,12,C3,Wistar,Rat,na,VendorA,2026-02-01
+RAT_007,M,250,10,C4,Wistar,Rat,na,VendorA,2026-02-01
+RAT_008,F,236,11,C4,Wistar,Rat,na,VendorA,2026-02-01
+RAT_009,M,253,12,C5,Wistar,Rat,na,VendorA,2026-02-01
+RAT_010,F,240,10,C5,Wistar,Rat,na,VendorA,2026-02-01
+RAT_011,M,246,11,C6,Wistar,Rat,na,VendorA,2026-02-01
+RAT_012,F,237,12,C6,Wistar,Rat,na,VendorA,2026-02-01

@@ -4,39 +4,30 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "animal-randomizer"
-version = "0.1.0"
-description = "Reproducible random group assignment for animal studies (rodent neuroscience workflows)."
+version = "0.3.0"
+description = "Neuroprocessing Randomizer: reproducible animal group allocation with auditable workflows."
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 authors = [
   { name="Ali Mirzakhani", email="lab@neuroprocessing.org" }
 ]
 
-keywords = [
-  "neuroscience",
-  "animal studies",
-  "randomization",
-  "rodent",
-  "reproducibility",
-  "experimental design"
-]
-
-classifiers = [
-  "Development Status :: 3 - Alpha",
-  "Intended Audience :: Science/Research",
-  "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Topic :: Scientific/Engineering",
-]
+keywords = ["neuroscience", "animal studies", "randomization", "reproducibility"]
 
 dependencies = [
-  "pandas>=2.0.0"
+  "pandas>=2.0.0",
+  "openpyxl>=3.1.0",
+  "PyQt6>=6.6.0"
 ]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[project.scripts]
+animal-randomizer = "animal_randomizer.cli:main"
+animal-randomizer-gui = "animal_randomizer.ui.main_window:launch"
 
 [project.urls]
 Homepage = "https://github.com/neuroprocessing/animal-randomizer"

@@ -1,66 +1,77 @@
+from __future__ import annotations
+
 import argparse
 from pathlib import Path
-from datetime import datetime
-import pandas as pd
-import random
+
+from .io_handlers import export_assignments, import_animals
+from .models import ConstraintConfig, ProjectModel, RandomizationConfig, StudyMetadata
+from .project_io import save_project
+from .report import generate_html_report
+from .service import RandomizerService
 
 
-def generate_randomization(n: int, groups: int, seed: int, names=None, prefix="RAT", method="simple"):
-    random.seed(seed)
-
-    if names:
-        group_names = names
-    else:
-        group_names = [f"Group {chr(65+i)}" for i in range(groups)]
-
-    animals = [f"{prefix}_{i:03d}" for i in range(1, n + 1)]
-    random.shuffle(animals)
-
-    assignments = []
-    for idx, animal in enumerate(animals):
-        group = group_names[idx % groups]
-        assignments.append(group)
-
-    df = pd.DataFrame({
-        "Animal_ID": animals,
-        "Group": assignments,
-        "Randomization_Seed": seed,
-        "Method": method,
-        "Timestamp": datetime.now().isoformat(timespec="seconds")
-    })
-
-    return df
+def build_parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(description="Neuroprocessing Randomizer CLI")
+    p.add_argument("--input", required=True, help="Input CSV/XLSX animal file")
+    p.add_argument("--study-id", required=True)
+    p.add_argument("--title", default="Animal Study")
+    p.add_argument("--researcher", default="Unknown")
+    p.add_argument("--institution", default="Unknown")
+    p.add_argument("--method", choices=["simple", "balanced", "stratified", "block"], default="balanced")
+    p.add_argument("--groups", required=True, help="Comma-separated group names")
+    p.add_argument("--seed", type=int, default=None)
+    p.add_argument("--stratify-by", default="", help="Comma-separated fields: sex,cage,weight,age")
+    p.add_argument("--block-size", type=int, default=None)
+    p.add_argument("--random-block-sizes", default="", help="e.g. 4,6,8")
+    p.add_argument("--max-cage-per-group", type=int, default=None)
+    p.add_argument("--no-minimize-cage", action="store_true")
+    p.add_argument("--no-weight-balance", action="store_true")
+    p.add_argument("--out-alloc", default="allocation.csv")
+    p.add_argument("--out-report", default="allocation_report.html")
+    p.add_argument("--out-project", default="study.nprj")
+    return p
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Animal Randomizer - reproducible random group assignment for animal studies."
-    )
-    parser.add_argument("--n", type=int, required=True, help="Number of animals")
-    parser.add_argument("--groups", type=int, required=True, help="Number of groups")
-    parser.add_argument("--seed", type=int, required=True, help="Random seed for reproducibility")
-    parser.add_argument("--out", type=str, default="randomization.csv", help="Output CSV file path")
-    parser.add_argument("--names", type=str, default=None, help="Comma-separated group names")
-    parser.add_argument("--prefix", type=str, default="RAT", help="Animal ID prefix (default: RAT)")
-    parser.add_argument("--method", type=str, default="simple", help="Randomization method label")
+def main() -> None:
+    args = build_parser().parse_args()
+    animals = import_animals(args.input)
 
-    args = parser.parse_args()
-    names = args.names.split(",") if args.names else None
+    group_names = [x.strip() for x in args.groups.split(",") if x.strip()]
+    stratify_by = [x.strip() for x in args.stratify_by.split(",") if x.strip()]
+    random_block_sizes = [int(x.strip()) for x in args.random_block_sizes.split(",") if x.strip()]
 
-    df = generate_randomization(
-        n=args.n,
-        groups=args.groups,
+    cfg = RandomizationConfig(
+        method=args.method,
+        group_names=group_names,
         seed=args.seed,
-        names=names,
-        prefix=args.prefix,
-        method=args.method
+        stratify_by=stratify_by,
+        block_size=args.block_size,
+        random_block_sizes=random_block_sizes,
+        constraints=ConstraintConfig(
+            max_animals_per_cage_per_group=args.max_cage_per_group,
+            minimize_cage_clustering=not args.no_minimize_cage,
+            weight_balance=not args.no_weight_balance,
+        ),
     )
+    meta = StudyMetadata(
+        study_id=args.study_id,
+        title=args.title,
+        researcher_name=args.researcher,
+        institution=args.institution,
+    )
+    project = ProjectModel(metadata=meta, animals=animals, config=cfg, groups=group_names)
 
-    out_path = Path(args.out)
-    df.to_csv(out_path, index=False)
+    service = RandomizerService()
+    artifacts = service.run(project)
 
-    print(f"[OK] Randomization saved to: {out_path.resolve()}")
-    print(df.head())
+    export_assignments(artifacts.assignments, args.out_alloc)
+    generate_html_report(project, args.out_report)
+    save_project(project, args.out_project)
+
+    print(f"[OK] Randomization complete. Seed={artifacts.seed}")
+    print(f"[OK] Allocation file: {Path(args.out_alloc).resolve()}")
+    print(f"[OK] Report file: {Path(args.out_report).resolve()}")
+    print(f"[OK] Project file: {Path(args.out_project).resolve()}")
 
 
 if __name__ == "__main__":

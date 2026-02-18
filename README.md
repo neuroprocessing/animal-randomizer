@@ -1,172 +1,136 @@
-# Animal Randomizer 🐀🎲  
-**Reproducible random group assignment for animal studies (rodent neuroscience workflows).**
+# Neuroprocessing Randomizer
 
-Animal Randomizer is a lightweight open-source tool developed by **Neuroprocessing** for generating
-reproducible, transparent, and publication-ready randomization tables for animal experiments.
+**Tagline:** Reproducible Animal Group Allocation
 
-This tool is designed for neuroscience rodent studies (rats/mice), but can be used in any biomedical
-or experimental research requiring randomized group allocation.
+Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, and auditable group allocation in laboratory animal studies.
 
----
+## Current Status
 
-## Why this tool?
+- Version: `0.3.0`
+- Stage: MVP (functional)
+- Interfaces: CLI + PyQt6 wizard GUI
+- Project format: `.nprj` (JSON)
 
-Randomization is one of the most critical steps in experimental design. Poor or undocumented group allocation
-can introduce bias and compromise reproducibility.
+## Implemented MVP Features
 
-Animal Randomizer provides:
+- Randomization methods:
+  - `simple`
+  - `balanced`
+  - `stratified` (`sex`, `cage`, `weight`, `age`)
+  - `block` (fixed or random block sizes)
+- Bias-control constraints:
+  - max animals per cage per group
+  - cage clustering minimization
+  - weight-bin balancing
+- Reproducibility and auditability:
+  - user-provided or auto-generated seed
+  - SHA256 hashes for input/config/output
+  - software + algorithm version tracking
+  - JSON audit events in project state
+- Validation outputs:
+  - per-group `N`
+  - weight mean / SD
+  - sex distribution
+  - cage distribution
+  - Cohen's d for weight between groups
+  - imbalance warnings
+- Export outputs:
+  - allocation table (`.csv`, `.xlsx`)
+  - HTML report
+  - full project snapshot (`.nprj`)
 
-- ✅ Seed-based reproducibility (same seed → same randomization table)
-- ✅ Publication-ready outputs (CSV/Excel-ready)
-- ✅ Simple CLI workflow for lab usage
-- ✅ Transparent, auditable randomization logs
-- ✅ Extensible architecture (block / stratified randomization roadmap)
+## Wizard GUI (Implemented)
 
----
+`src/animal_randomizer/ui/main_window.py` provides a 5-step workflow:
 
-## Features (v0.1.0)
+1. Create Study
+2. Import Animals
+3. Configure Strategy
+4. Run Randomization
+5. Review and Export
 
-- Simple random allocation
-- Balanced distribution across groups
-- Optional custom group names
-- CSV export
-- Reproducible output with random seed
+Includes editable animal table, theme toggle (dark/light), run summary, and export actions.
 
----
+## Architecture
+
+- `src/animal_randomizer/models.py`: Dataclasses for animals, study/config, assignments, project state.
+- `src/animal_randomizer/randomization.py`: Allocation engine and constraints.
+- `src/animal_randomizer/stats.py`: Validation metrics and warnings.
+- `src/animal_randomizer/service.py`: Orchestrates validation, randomization, stats, hashing, audit.
+- `src/animal_randomizer/project_io.py`: Save/load `.nprj` files.
+- `src/animal_randomizer/io_handlers.py`: CSV/XLSX import and allocation export.
+- `src/animal_randomizer/report.py`: HTML report generation.
+- `src/animal_randomizer/cli.py`: CLI workflow.
+- `src/animal_randomizer/ui/main_window.py`: PyQt6 wizard interface.
 
 ## Installation
 
-### Option 1: Clone from GitHub
-```bash
-git clone https://github.com/neuroprocessing/animal-randomizer.git
-cd animal-randomizer
-pip install -r requirements.txt
-```
-
-### Option 2: Install as editable package (recommended for development)
 ```bash
 pip install -e .
 ```
 
----
-
-## Quick Start
-
-### Example: Randomize 24 animals into 2 groups
-```bash
-python -m animal_randomizer.cli --n 24 --groups 2 --seed 42 --out output.csv
-```
-
-This generates a CSV file like:
-
-| Animal_ID | Group |
-|----------|-------|
-| RAT_001  | Group A |
-| RAT_002  | Group B |
-| ...      | ... |
-
----
-
-## CLI Options
-
-| Argument | Description |
-|---------|-------------|
-| `--n` | Number of animals |
-| `--groups` | Number of groups |
-| `--seed` | Random seed for reproducibility |
-| `--out` | Output CSV file path |
-| `--names` | Optional group names (comma-separated) |
-
-Example with custom group names:
+## CLI Example
 
 ```bash
-python -m animal_randomizer.cli --n 30 --groups 3 --names Control,DrugA,DrugB --seed 123 --out study.csv
+animal-randomizer \
+  --input examples/example_dataset.csv \
+  --study-id NP-2026-001 \
+  --title "Cognitive Rescue Pilot" \
+  --researcher "Dr. N. Process" \
+  --institution "Neuroprocessing Lab" \
+  --method stratified \
+  --groups Control,DrugA,DrugB \
+  --stratify-by sex,cage,weight \
+  --random-block-sizes 4,6,8 \
+  --max-cage-per-group 1 \
+  --seed 20260217 \
+  --out-alloc examples/example_allocation.csv \
+  --out-report examples/example_report.html \
+  --out-project examples/example_project.nprj
 ```
 
----
+## GUI
 
-## Output Format
+```bash
+animal-randomizer-gui
+```
 
-The generated CSV contains:
+Alternative:
 
-- `Animal_ID`
-- `Group`
-- `Randomization_Seed`
-- `Method`
-- `Timestamp`
+```bash
+python -m animal_randomizer.ui.app
+```
 
-This output format is designed to be directly included in supplementary materials of scientific papers.
+## Docs and Examples
 
----
+- User guide: `docs/user_guide.md`
+- Developer guide: `docs/developer_guide.md`
+- Example dataset: `examples/example_dataset.csv`
+- Example report: `examples/example_report.html`
+- Example project: `examples/example_project.nprj`
 
-## Scientific Use Case
+## Testing
 
-Typical workflow:
-
-1. Define study sample size (N)
-2. Choose group structure (Control vs Treatment)
-3. Generate randomization table
-4. Assign animal cage IDs to group IDs
-5. Export and store allocation file in your experiment log folder
-6. Cite the tool in your manuscript for reproducibility
-
----
+```bash
+python -m pytest -q
+```
 
 ## Roadmap
 
-Planned upcoming releases:
+### v1.0 (planned)
 
-- Block randomization
-- Stratified randomization (weight, age, baseline sucrose preference)
-- Excel export
-- PDF summary report
-- GUI (PyQt6) for lab technicians
-- Integration into a larger animal study management suite
+- PDF report export
+- richer GUI validation/QA panels
+- improved statistical threshold controls
 
----
+### v1.5 (planned)
 
-## Contributing
+- optimization-driven constrained randomization (MILP/SAT)
+- protocol templates by species/strain
+- power-analysis helper integration
 
-We welcome contributions from researchers, engineers, and neuroscience labs.
+### v2.0 (planned)
 
-To contribute:
-
-1. Fork the repository
-2. Create a new branch (`feature/my-feature`)
-3. Commit changes
-4. Open a Pull Request
-
----
-
-## Citation
-
-If you use this software in your research, please cite it.
-
-GitHub will automatically generate citation formats using the included `CITATION.cff`.
-
----
-
-## License
-
-This project is released under the **MIT License**.
-
----
-
-## Maintainers
-
-Developed by **Neuroprocessing**  
-Open Neuroscience Systems Lab
-
-- Ali Mirzakhani (Founder, Neuroengineering & AI)  
-- Neuroprocessing Team Contributors
-
-Repository: https://github.com/neuroprocessing/animal-randomizer
-
----
-
-## Contact
-
-For collaboration, grants, and open science partnerships:
-
-📧 neuroprocessing@gmail.com
-🌍 https://github.com/neuroprocessing
+- integration with Neuroprocessing Animal Study Manager
+- shared data backend
+- role-based permissions and e-signature flow

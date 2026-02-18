@@ -1,12 +1,17 @@
-from animal_randomizer.cli import generate_randomization
+from animal_randomizer.randomization import randomize
+from animal_randomizer.models import AnimalRecord, RandomizationConfig
 
 
 def test_reproducibility():
-    df1 = generate_randomization(n=10, groups=2, seed=42)
-    df2 = generate_randomization(n=10, groups=2, seed=42)
-    assert df1.equals(df2)
+    animals = [AnimalRecord(animal_id=f"RAT_{i:03d}") for i in range(10)]
+    cfg = RandomizationConfig(method="simple", group_names=["A", "B"], seed=42)
+    df1, _ = randomize(animals, cfg)
+    df2, _ = randomize(animals, cfg)
+    assert [(x.animal_id, x.group) for x in df1] == [(x.animal_id, x.group) for x in df2]
 
 
 def test_group_count():
-    df = generate_randomization(n=12, groups=3, seed=1)
-    assert df["Group"].nunique() == 3
+    animals = [AnimalRecord(animal_id=f"RAT_{i:03d}") for i in range(12)]
+    cfg = RandomizationConfig(method="simple", group_names=["A", "B", "C"], seed=1)
+    assignments, _ = randomize(animals, cfg)
+    assert len(set(x.group for x in assignments)) == 3
