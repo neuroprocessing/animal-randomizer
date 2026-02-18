@@ -11,6 +11,18 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
 - Interfaces: CLI + PyQt6 wizard GUI
 - Project format: `.nprj` (JSON)
 
+## What's New in v0.3.0
+
+- Added a full modular MVP architecture (core logic separated from UI and I/O).
+- Added four randomization strategies: `simple`, `balanced`, `stratified`, and `block`.
+- Added cage-aware and weight-balancing constraints for bias reduction.
+- Added reproducibility controls: fixed/auto seed + SHA256 integrity hashes.
+- Added statistical validation outputs and imbalance warnings (including Cohen's d).
+- Added `.nprj` project save/load with auditable JSON event logs.
+- Added export pipeline for allocation tables (`.csv`, `.xlsx`) and HTML reports.
+- Added PyQt6 5-step wizard GUI for non-programmer lab workflows.
+- Added example dataset, example outputs, and unit tests for the randomization engine.
+
 ## Implemented MVP Features
 
 - Randomization methods:
