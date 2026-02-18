@@ -1,0 +1,484 @@
+{
+  "metadata": {
+    "study_id": "NP-001",
+    "title": "Pilot Study",
+    "researcher_name": "Researcher",
+    "institution": "Institution",
+    "created_at": "2026-02-18T11:51:38.594817+00:00"
+  },
+  "animals": [
+    {
+      "animal_id": "RAT_001",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_002",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_003",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_004",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_005",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_006",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_007",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_008",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_009",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_010",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_011",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_012",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_013",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_014",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_015",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_016",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_017",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_018",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_019",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_020",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_021",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_022",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_023",
+      "sex": "M",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    },
+    {
+      "animal_id": "RAT_024",
+      "sex": "F",
+      "weight": null,
+      "age": null,
+      "cage": null,
+      "strain": null,
+      "species": "Rat",
+      "notes": null,
+      "source": null,
+      "date_of_arrival": "2026-02-18"
+    }
+  ],
+  "config": {
+    "method": "simple",
+    "group_names": [
+      "Control",
+      "Treatment"
+    ],
+    "seed": 1983236173,
+    "stratify_by": [
+      "sex",
+      "cage",
+      "weight"
+    ],
+    "block_size": null,
+    "random_block_sizes": [
+      4,
+      6,
+      8
+    ],
+    "constraints": {
+      "max_animals_per_cage_per_group": 1,
+      "minimize_cage_clustering": true,
+      "weight_balance": true
+    },
+    "algorithm_version": "1.0.0"
+  },
+  "groups": [
+    "Control",
+    "Treatment"
+  ],
+  "audit_log": [
+    {
+      "timestamp": "2026-02-18T11:51:38.594817+00:00",
+      "action": "validation",
+      "details": {
+        "animals": 24
+      }
+    },
+    {
+      "timestamp": "2026-02-18T11:51:38.594817+00:00",
+      "action": "randomization",
+      "details": {
+        "method": "simple",
+        "seed": 1983236173
+      }
+    }
+  ],
+  "assignments": [
+    {
+      "animal_id": "RAT_010",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_012",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_004",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_013",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_020",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_003",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_022",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_001",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_021",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_008",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_024",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_005",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_006",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_011",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_015",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_017",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_023",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_019",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_009",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_007",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_016",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_014",
+      "group": "Treatment"
+    },
+    {
+      "animal_id": "RAT_018",
+      "group": "Control"
+    },
+    {
+      "animal_id": "RAT_002",
+      "group": "Treatment"
+    }
+  ],
+  "stats": {
+    "groups": {
+      "Control": {
+        "n": 12,
+        "weight_mean": null,
+        "weight_sd": 0.0,
+        "sex_distribution": {
+          "F": 8,
+          "M": 4
+        },
+        "cage_distribution": {
+          "NA": 12
+        }
+      },
+      "Treatment": {
+        "n": 12,
+        "weight_mean": null,
+        "weight_sd": 0.0,
+        "sex_distribution": {
+          "F": 4,
+          "M": 8
+        },
+        "cage_distribution": {
+          "NA": 12
+        }
+      }
+    },
+    "effect_sizes": {
+      "Control vs Treatment": {
+        "cohens_d_weight": 0.0
+      }
+    }
+  },
+  "warnings": [],
+  "hashes": {
+    "input_hash": "1fbe98a1d8a2aa1707bfe3644da509efddcdc3f0a85694a9a665937b44a571fa",
+    "config_hash": "69d4c7722ab93669334c137f57dabfb8b4f150a7b3a81a11a4ae99b70b0753a0",
+    "output_hash": "4e2804829199a3a9cb0785e1e84d4588fe885562c15860a60fb465c288c9e5b8"
+  },
+  "software_version": "0.3.0",
+  "build_date": "2026-02-18"
+}

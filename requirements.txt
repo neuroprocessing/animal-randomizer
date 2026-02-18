@@ -1,4 +1,4 @@
-# Neuroprocessing Randomizer v0.3.0
+# Neuroprocessing Randomizer v1.0.0
 # Core runtime dependencies
 pandas>=2.0.0
 openpyxl>=3.1.0

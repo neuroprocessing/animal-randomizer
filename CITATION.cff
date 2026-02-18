@@ -1,17 +1,16 @@
 ```yaml
-cff-version: 1.2.0
-message: "If you use this software in your research, please cite it."
-title: "Animal Randomizer"
-version: 0.1.0
-date-released: 2026-02-17
-type: software
 
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Animal Randomizer"
 authors:
-  - family-names: "Mirzakhani"
-    given-names: "Ali"
-    affiliation: "Neuroprocessing | Open Neuroscience Systems Lab"
-    emails: "amirzakhani7@yahoo.com"
-			"neuroprocessing@gmail.com"
+- family-names: Mirzakhani
+  given-names: Ali
+orcid: https://orcid.org/0009-0002-5056-2792
+title: "Animal Randomizer"
+version: Animal_andomizer_V0.3.0
+date-released: 2026-02-18
+type: software
 
 repository-code: "https://github.com/neuroprocessing/animal-randomizer"
 url: "https://github.com/neuroprocessing/animal-randomizer"

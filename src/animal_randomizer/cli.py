@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from .io_handlers import export_assignments, import_animals
+from .io_handlers import export_assignments, export_interop_bundle, import_animals
 from .models import ConstraintConfig, ProjectModel, RandomizationConfig, StudyMetadata
 from .project_io import save_project
 from .report import generate_html_report
@@ -29,6 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--out-alloc", default="allocation.csv")
     p.add_argument("--out-report", default="allocation_report.html")
     p.add_argument("--out-project", default="study.nprj")
+    p.add_argument("--export-bundle", action="store_true", help="Also export Excel/TSV/Prism-compatible files.")
     return p
 
 
@@ -64,9 +65,20 @@ def main() -> None:
     service = RandomizerService()
     artifacts = service.run(project)
 
-    export_assignments(artifacts.assignments, args.out_alloc)
+    export_assignments(artifacts.assignments, args.out_alloc, animals=project.animals)
     generate_html_report(project, args.out_report)
     save_project(project, args.out_project)
+
+    if args.export_bundle:
+        bundle_paths = export_interop_bundle(
+            artifacts.assignments,
+            animals=project.animals,
+            output_dir=Path(args.out_alloc).parent,
+            stem=Path(args.out_alloc).stem,
+        )
+        print("[OK] Interop bundle exported:")
+        for key, value in bundle_paths.items():
+            print(f"  - {key}: {value.resolve()}")
 
     print(f"[OK] Randomization complete. Seed={artifacts.seed}")
     print(f"[OK] Allocation file: {Path(args.out_alloc).resolve()}")

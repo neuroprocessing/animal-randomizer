@@ -5,7 +5,22 @@ from typing import Iterable
 from .models import AnimalRecord
 
 
-VALID_SEX = {"M", "F", "Male", "Female", None, ""}
+def normalize_sex_value(value: str | None) -> str | None:
+    """Normalize sex values to canonical form used across the project."""
+    if value is None:
+        return None
+    cleaned = str(value).strip()
+    if not cleaned:
+        return None
+
+    lowered = cleaned.lower()
+    if lowered in {"m", "male"}:
+        return "M"
+    if lowered in {"f", "female"}:
+        return "F"
+    if lowered in {"na", "n/a", "none", "unknown", "u", "-"}:
+        return None
+    raise ValueError(f"invalid sex value: {value}")
 
 
 def validate_animals(animals: Iterable[AnimalRecord]) -> None:
@@ -18,5 +33,7 @@ def validate_animals(animals: Iterable[AnimalRecord]) -> None:
         seen.add(animal.animal_id)
         if animal.weight is not None and animal.weight <= 0:
             raise ValueError(f"Animal {animal.animal_id} has non-positive weight")
-        if animal.sex not in VALID_SEX:
-            raise ValueError(f"Animal {animal.animal_id} has invalid sex value: {animal.sex}")
+        try:
+            animal.sex = normalize_sex_value(animal.sex)
+        except ValueError:
+            raise ValueError(f"Animal {animal.animal_id} has invalid sex value: {animal.sex}") from None

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -240,18 +240,21 @@
   <main>
     <section class="hero">
       <div class="container">
-        <p class="eyebrow">NEUROPROCESSING • REPRODUCIBLE SCIENCE • OPEN SOURCE</p>
+        <p class="eyebrow">NEUROPROCESSING â€¢ REPRODUCIBLE SCIENCE â€¢ OPEN SOURCE</p>
         <h1>Neuroprocessing Randomizer</h1>
         <p class="lede">
           A reproducible randomization and group allocation system for laboratory animal studies,
           designed for scientific rigor, auditability, and practical lab workflows.
         </p>
         <div class="badges">
-          <span class="badge">Current: v0.3.0 (MVP)</span>
+          <span class="badge">Current: v1.0.0 (Release)</span>
           <span class="badge">CLI + PyQt6 Wizard GUI</span>
+          <span class="badge">Welcome Window + Help System</span>
+          <span class="badge">Auto Animal List Generator</span>
           <span class="badge">.nprj Project Format</span>
           <span class="badge">SHA256 Integrity Hashing</span>
           <span class="badge">HTML Report Export</span>
+          <span class="badge">Windows .exe Build</span>
         </div>
       </div>
     </section>
@@ -278,7 +281,7 @@
           </article>
           <article class="card">
             <h3>Outputs</h3>
-            <p>Allocation export to <code>.csv</code>/<code>.xlsx</code>, publication-ready HTML report, and full <code>.nprj</code> snapshot.</p>
+            <p>Allocation export to <code>.csv</code>/<code>.xlsx</code>/<code>.tsv</code>, Prism-grouped tables, HTML report, and full <code>.nprj</code> snapshot.</p>
           </article>
           <article class="card">
             <h3>Modular Architecture</h3>
@@ -301,6 +304,7 @@
               <li>Run Randomization</li>
               <li>Review and Export</li>
             </ul>
+            <p>Includes separate Welcome window, in-app Help button, automated animal list generation, dropdown/date input controls, and export summary guidance.</p>
           </div>
           <div class="block" id="install">
             <h3>Install</h3>
@@ -322,10 +326,17 @@ pip install -e .</pre>
   --random-block-sizes 4,6,8 \
   --max-cage-per-group 1 \
   --seed 20260217 \
+  --export-bundle \
   --out-alloc examples/example_allocation.csv \
   --out-report examples/example_report.html \
   --out-project examples/example_project.nprj</pre>
             <p style="margin-top:8px;">GUI launch: <code>animal-randomizer-gui</code></p>
+          </div>
+          <div class="block">
+            <h3>Windows Release</h3>
+            <pre>powershell -ExecutionPolicy Bypass -File .\scripts\build_windows.ps1</pre>
+            <pre>& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" ".\scripts\installer.iss"</pre>
+            <p>The generated app includes branded icon/splash assets and installer packaging support.</p>
           </div>
         </div>
 
@@ -334,8 +345,8 @@ pip install -e .</pre>
           <ul class="info-list">
             <li><strong>Name:</strong> Neuroprocessing Randomizer</li>
             <li><strong>Tagline:</strong> Reproducible Animal Group Allocation</li>
-            <li><strong>Status:</strong> MVP Functional</li>
-            <li><strong>Version:</strong> 0.3.0</li>
+            <li><strong>Status:</strong> Production Release</li>
+            <li><strong>Version:</strong> 1.0.0</li>
             <li><strong>License:</strong> MIT</li>
             <li><strong>Organization:</strong> Neuroprocessing</li>
           </ul>
@@ -354,9 +365,11 @@ pip install -e .</pre>
     <div class="container">
       <p>
         &copy; 2026 Neuroprocessing. Neuroprocessing Randomizer is released under the MIT License.
-        <br />Maintainer: Ali Mirzakhani • Open Neuroscience Systems Lab
+        <br />Maintainer: Ali Mirzakhani â€¢ Open Neuroscience Systems Lab
       </p>
     </div>
   </footer>
 </body>
 </html>
+
+

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "animal-randomizer"
-version = "0.3.0"
+version = "1.0.0"
 description = "Neuroprocessing Randomizer: reproducible animal group allocation with auditable workflows."
 readme = "README.md"
 license = { text = "MIT" }
@@ -27,7 +27,7 @@ dev = ["pytest>=8.0.0"]
 
 [project.scripts]
 animal-randomizer = "animal_randomizer.cli:main"
-animal-randomizer-gui = "animal_randomizer.ui.main_window:launch"
+animal-randomizer-gui = "animal_randomizer.ui.app:launch"
 
 [project.urls]
 Homepage = "https://github.com/neuroprocessing/animal-randomizer"
@@ -36,6 +36,9 @@ Issues = "https://github.com/neuroprocessing/animal-randomizer/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"animal_randomizer" = ["assets/*.png", "assets/*.ico"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -6,6 +6,7 @@ from animal_randomizer.models import AnimalRecord, ConstraintConfig, Randomizati
 from animal_randomizer.randomization import randomize
 from animal_randomizer.service import RandomizerService
 from animal_randomizer.models import ProjectModel, StudyMetadata
+from animal_randomizer.validation import validate_animals
 
 
 def sample_animals(n: int = 24):
@@ -69,3 +70,15 @@ def test_service_produces_hashes_and_stats():
     assert out.hashes["config_hash"]
     assert out.hashes["output_hash"]
     assert "groups" in out.stats
+
+
+def test_sex_normalization_accepts_common_values():
+    animals = [
+        AnimalRecord("A1", sex="m"),
+        AnimalRecord("A2", sex=" FEMALE "),
+        AnimalRecord("A3", sex="na"),
+    ]
+    validate_animals(animals)
+    assert animals[0].sex == "M"
+    assert animals[1].sex == "F"
+    assert animals[2].sex is None

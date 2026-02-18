@@ -6,24 +6,34 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
 
 ## Current Status
 
-- Version: `0.3.0`
-- Stage: MVP (functional)
+- Version: `1.0.0`
+- Stage: Production Release
 - Interfaces: CLI + PyQt6 wizard GUI
 - Project format: `.nprj` (JSON)
 
-## What's New in v0.3.0
+## What's New in v1.0.0
 
-- Added a full modular MVP architecture (core logic separated from UI and I/O).
-- Added four randomization strategies: `simple`, `balanced`, `stratified`, and `block`.
-- Added cage-aware and weight-balancing constraints for bias reduction.
-- Added reproducibility controls: fixed/auto seed + SHA256 integrity hashes.
-- Added statistical validation outputs and imbalance warnings (including Cohen's d).
-- Added `.nprj` project save/load with auditable JSON event logs.
-- Added export pipeline for allocation tables (`.csv`, `.xlsx`) and HTML reports.
-- Added PyQt6 5-step wizard GUI for non-programmer lab workflows.
-- Added example dataset, example outputs, and unit tests for the randomization engine.
+- Promoted the project from MVP to a publishable `1.0.0` release.
+- Upgraded the desktop interface with a professional website-aligned visual design.
+- Added branded startup experience for Windows builds:
+  - application icon
+  - splash screen
+  - packaged app assets for distributable builds
+- Added Windows release pipeline with PyInstaller:
+  - build script: `scripts/build_windows.ps1`
+  - build spec: `scripts/animal-randomizer.spec`
+  - Inno Setup script: `scripts/installer.iss`
+  - release guide: `docs/windows_release.md`
+- Added product-level workflow improvements:
+  - separate Welcome window before entering main app
+  - citation text displayed directly from `CITATION.cff`
+  - in-app Help button with step-specific guidance
+  - automated animal list generation (count + ID pattern + species + sex defaults)
+  - dropdown fields for list-based parameters (`Sex`, `Species`)
+  - calendar date picker for `Date of arrival`
+  - export summary dialog with method-specific manuscript guidance
 
-## Implemented MVP Features
+## Implemented v1.0.0 Features
 
 - Randomization methods:
   - `simple`
@@ -47,7 +57,8 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
   - Cohen's d for weight between groups
   - imbalance warnings
 - Export outputs:
-  - allocation table (`.csv`, `.xlsx`)
+  - allocation table (`.csv`, `.xlsx`, `.tsv`)
+  - Prism-friendly grouped tables (`*_grouped_for_prism.csv`, `*_weights_for_prism.csv`)
   - HTML report
   - full project snapshot (`.nprj`)
 
@@ -62,6 +73,7 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
 5. Review and Export
 
 Includes editable animal table, theme toggle (dark/light), run summary, and export actions.
+Also includes a pre-app Welcome window, auto-list generation for animal metadata, dropdown/date controls, and context help.
 
 ## Architecture
 
@@ -73,6 +85,7 @@ Includes editable animal table, theme toggle (dark/light), run summary, and expo
 - `src/animal_randomizer/io_handlers.py`: CSV/XLSX import and allocation export.
 - `src/animal_randomizer/report.py`: HTML report generation.
 - `src/animal_randomizer/cli.py`: CLI workflow.
+- `src/animal_randomizer/ui/app.py`: branded startup + Welcome window.
 - `src/animal_randomizer/ui/main_window.py`: PyQt6 wizard interface.
 
 ## Installation
@@ -80,6 +93,21 @@ Includes editable animal table, theme toggle (dark/light), run summary, and expo
 ```bash
 pip install -e .
 ```
+
+## Windows Release Build
+
+Build a Windows distributable executable:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\build_windows.ps1
+```
+
+Output:
+
+- `dist\NeuroprocessingRandomizer\NeuroprocessingRandomizer.exe`
+- `dist\installer\NeuroprocessingRandomizer-Setup-v1.0.0.exe` (if built via Inno Setup)
+
+Full guide: `docs/windows_release.md`
 
 ## CLI Example
 
@@ -96,10 +124,13 @@ animal-randomizer \
   --random-block-sizes 4,6,8 \
   --max-cage-per-group 1 \
   --seed 20260217 \
+  --export-bundle \
   --out-alloc examples/example_allocation.csv \
   --out-report examples/example_report.html \
   --out-project examples/example_project.nprj
 ```
+
+`--export-bundle` creates Excel/TSV/Prism-compatible companion files for downstream analysis tools such as Excel, GraphPad Prism, and Origin.
 
 ## GUI
 
@@ -129,7 +160,7 @@ python -m pytest -q
 
 ## Roadmap
 
-### v1.0 (planned)
+### v1.1 (planned)
 
 - PDF report export
 - richer GUI validation/QA panels

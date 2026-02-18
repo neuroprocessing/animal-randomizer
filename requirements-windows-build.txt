@@ -1,0 +1,2 @@
+# Windows build requirements for distributable executable
+pyinstaller>=6.0.0

@@ -1,0 +1,25 @@
+Animal_ID	Group	Sex	Weight	Age	Cage	Strain	Species	Notes	Source	Date_of_arrival
+RAT_004	Control	F					Rat			2026-02-18
+RAT_006	Control	F					Rat			2026-02-18
+RAT_009	Control	M					Rat			2026-02-18
+RAT_010	Control	F					Rat			2026-02-18
+RAT_015	Control	M					Rat			2026-02-18
+RAT_016	Control	F					Rat			2026-02-18
+RAT_018	Control	F					Rat			2026-02-18
+RAT_020	Control	F					Rat			2026-02-18
+RAT_021	Control	M					Rat			2026-02-18
+RAT_022	Control	F					Rat			2026-02-18
+RAT_023	Control	M					Rat			2026-02-18
+RAT_024	Control	F					Rat			2026-02-18
+RAT_001	Treatment	M					Rat			2026-02-18
+RAT_002	Treatment	F					Rat			2026-02-18
+RAT_003	Treatment	M					Rat			2026-02-18
+RAT_005	Treatment	M					Rat			2026-02-18
+RAT_007	Treatment	M					Rat			2026-02-18
+RAT_008	Treatment	F					Rat			2026-02-18
+RAT_011	Treatment	M					Rat			2026-02-18
+RAT_012	Treatment	F					Rat			2026-02-18
+RAT_013	Treatment	M					Rat			2026-02-18
+RAT_014	Treatment	F					Rat			2026-02-18
+RAT_017	Treatment	M					Rat			2026-02-18
+RAT_019	Treatment	M					Rat			2026-02-18
