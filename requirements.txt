@@ -1,0 +1,8 @@
+# Neuroprocessing Randomizer v0.3.0
+# Core runtime dependencies
+pandas>=2.0.0
+openpyxl>=3.1.0
+PyQt6>=6.6.0
+
+# Test dependency
+pytest>=8.0.0
