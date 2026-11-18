@@ -1,3 +1,7 @@
+Copyright (C) 2026 Ali Mirzakhani
+
+SPDX-License-Identifier: GPL-3.0-only
+
 # Neuroprocessing Randomizer
 
 **Tagline:** Reproducible Animal Group Allocation
@@ -216,3 +220,22 @@ include a prebuilt Randomizer executable or installer.
 - integration with Neuroprocessing Animal Study Manager
 - shared data backend
 - role-based permissions and e-signature flow
+
+
+## License
+
+Neuroprocessing Randomizer v1.2.1-rc1 is distributed under the GNU General Public License version 3.0 only (GPL-3.0-only).
+
+See the LICENSE file for the complete terms.
+
+The application uses PyQt6, which is available under GPLv3 or a commercial license from Riverbank Computing. Third-party components remain subject to their respective licenses and copyright notices.
+
+See THIRD_PARTY_NOTICES.md for dependency attribution.
+
+The corresponding application source code and installation instructions are available in this repository.
+
+Earlier releases remain subject to the licenses under which they were originally distributed.
+
+## Citation
+
+Please use the citation information in CITATION.cff.

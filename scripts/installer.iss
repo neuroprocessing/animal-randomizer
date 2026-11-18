@@ -33,7 +33,14 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "Create a desktop icon"; GroupDescription: "Additional icons:"; Flags: unchecked
 
 [Files]
+; The entire PyInstaller onedir output is required: EXE plus DLLs and _internal assets.
+; Compile only after scripts/build_windows.ps1 has produced this folder.
 Source: "dist\NeuroprocessingRandomizer\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Distribute license, attribution and build/source instructions alongside binaries.
+Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+Source: "THIRD_PARTY_NOTICES.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "docs\windows_release.md"; DestDir: "{app}\docs"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\Neuroprocessing Randomizer"; Filename: "{app}\{#MyAppExeName}"
