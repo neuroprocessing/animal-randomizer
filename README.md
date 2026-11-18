@@ -6,14 +6,31 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
 
 ## Current Status
 
-- Version: `1.0.0`
-- Stage: Production Release
+- Version: `1.2.1-rc1`
+- Stage: Release candidate; public DOI pending
 - Interfaces: CLI + PyQt6 wizard GUI
 - Project format: `.nprj` (JSON)
 
-## What's New in v1.0.0
+## What's New in v1.2.1-rc1
 
-- Promoted the project from MVP to a publishable `1.0.0` release.
+- Added pre-randomization QC gate tied to selected stratification and constraint settings.
+- Added blinding workflow exports:
+  - `*_blinded.csv` (experimenter-facing coded groups)
+  - `*_blinding_key.csv` (restricted unblinding key)
+- Added methods-ready text section to HTML report for manuscript workflow.
+- Added deterministic blinding export support in CLI and GUI export bundle.
+- Version markers are aligned to `1.2.1-rc1` for this release candidate.
+- Fail-closed validation for malformed configurations and impossible cage constraints.
+- Stable handling of multiple Animal ID aliases and missing dates (no silent current-date default).
+- Shared cage-constraint accounting across strata and blocks.
+- Sample-SD-based descriptive weight diagnostics and explicit effect-size definition.
+- Study-specific allocation records are deliberately excluded; examples are synthetic only.
+- HTML reports escape study/user values, and methods text distinguishes requested
+  constraints from constraints verified by the QC gate.
+
+## What's New in 1.2.1-rc1
+
+- Promoted the project from MVP to a publishable `1.2.1-rc1` release.
 - Upgraded the desktop interface with a professional website-aligned visual design.
 - Added branded startup experience for Windows builds:
   - application icon
@@ -33,7 +50,7 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
   - calendar date picker for `Date of arrival`
   - export summary dialog with method-specific manuscript guidance
 
-## Implemented v1.0.0 Features
+## Implemented features
 
 - Randomization methods:
   - `simple`
@@ -44,6 +61,12 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
   - max animals per cage per group
   - cage clustering minimization
   - weight-bin balancing
+
+Constraints are checked as hard post-allocation invariants when configured. If a
+constraint is infeasible, the run stops with an explicit error. `simple` without
+constraints is a seeded shuffle followed by deterministic round-robin labels; it
+must not be described as covariate-balanced. A constrained `simple` run uses the
+same fail-closed allocator as `balanced`.
 - Reproducibility and auditability:
   - user-provided or auto-generated seed
   - SHA256 hashes for input/config/output
@@ -54,11 +77,12 @@ Neuroprocessing Randomizer is an open-source tool for rigorous, reproducible, an
   - weight mean / SD
   - sex distribution
   - cage distribution
-  - Cohen's d for weight between groups
+  - descriptive weight means/SDs and Cohen's d (pooled sample SD; uncorrected)
   - imbalance warnings
 - Export outputs:
   - allocation table (`.csv`, `.xlsx`, `.tsv`)
   - Prism-friendly grouped tables (`*_grouped_for_prism.csv`, `*_weights_for_prism.csv`)
+  - blinded outputs (`*_blinded.csv`, `*_blinding_key.csv`)
   - HTML report
   - full project snapshot (`.nprj`)
 
@@ -105,7 +129,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\build_windows.ps1
 Output:
 
 - `dist\NeuroprocessingRandomizer\NeuroprocessingRandomizer.exe`
-- `dist\installer\NeuroprocessingRandomizer-Setup-v1.0.0.exe` (if built via Inno Setup)
+- `dist\installer\NeuroprocessingRandomizer-Setup-v1.2.1-rc1.exe` (if built via Inno Setup)
 
 Full guide: `docs/windows_release.md`
 
@@ -155,12 +179,27 @@ python -m animal_randomizer.ui.app
 ## Testing
 
 ```bash
-python -m pytest -q
+PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q -p no:cacheprovider
 ```
+
+PowerShell equivalent:
+
+```powershell
+$env:PYTHONPATH = "src"
+$env:PYTHONDONTWRITEBYTECODE = "1"
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1"
+python -m pytest -q -p no:cacheprovider
+```
+
+For release verification, install the project in a clean environment and run
+the test command above. The source package does not include a release CI
+workflow. No study allocation or private animal metadata is required to run
+the suite. Windows build scripts are provided; this source release does not
+include a prebuilt Randomizer executable or installer.
 
 ## Roadmap
 
-### v1.1 (planned)
+### v1.3 (planned)
 
 - PDF report export
 - richer GUI validation/QA panels

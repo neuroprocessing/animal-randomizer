@@ -75,6 +75,7 @@ def main() -> None:
             animals=project.animals,
             output_dir=Path(args.out_alloc).parent,
             stem=Path(args.out_alloc).stem,
+            seed=artifacts.seed,
         )
         print("[OK] Interop bundle exported:")
         for key, value in bundle_paths.items():

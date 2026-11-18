@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from itertools import combinations
 from math import sqrt
-from statistics import mean, pstdev
+from statistics import mean, stdev
 from typing import Any, Dict, List
 
 from .models import AnimalRecord, AssignmentRecord
@@ -14,9 +14,12 @@ def _cohens_d(values_a: List[float], values_b: List[float]) -> float:
         return 0.0
     mean_a = mean(values_a)
     mean_b = mean(values_b)
-    sd_a = pstdev(values_a)
-    sd_b = pstdev(values_b)
-    pooled = sqrt((sd_a**2 + sd_b**2) / 2.0)
+    sd_a = stdev(values_a)
+    sd_b = stdev(values_b)
+    pooled = sqrt(
+        (((len(values_a) - 1) * sd_a**2) + ((len(values_b) - 1) * sd_b**2))
+        / (len(values_a) + len(values_b) - 2)
+    )
     if pooled == 0:
         return 0.0
     return (mean_a - mean_b) / pooled
@@ -45,7 +48,7 @@ def compute_statistics(
         stats["groups"][group] = {
             "n": len(rows),
             "weight_mean": round(mean(weights), 4) if weights else None,
-            "weight_sd": round(pstdev(weights), 4) if len(weights) > 1 else 0.0,
+            "weight_sd": round(stdev(weights), 4) if len(weights) > 1 else 0.0,
             "sex_distribution": dict(sex_counts),
             "cage_distribution": dict(cage_counts),
         }
@@ -55,7 +58,10 @@ def compute_statistics(
         wb = [float(a.weight) for a in by_group[gb] if a.weight is not None]
         d = round(_cohens_d(wa, wb), 4)
         label = f"{ga} vs {gb}"
-        stats["effect_sizes"][label] = {"cohens_d_weight": d}
+        stats["effect_sizes"][label] = {
+            "cohens_d_weight": d,
+            "definition": "pooled sample SD; uncorrected Cohen's d",
+        }
         if abs(d) >= weight_d_warning:
             warnings.append(f"Weight imbalance warning ({label}): Cohen's d={d}")
 

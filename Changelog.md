@@ -6,6 +6,36 @@ This project follows semantic versioning: **MAJOR.MINOR.PATCH**
 
 ---
 
+## [1.2.1-rc1] - unreleased
+### Changed
+- Hardened input/configuration validation and made infeasible hard constraints fail closed.
+- Preserved missing dates rather than silently substituting the current date.
+- Made cage accounting global across stratified and block allocations.
+- Stabilized Animal ID alias selection and rejected contradictory aliases.
+- Corrected descriptive standard deviations to use sample SD and labelled the uncorrected Cohen's *d* definition.
+- Removed generated study-looking allocation files from the public candidate; examples remain synthetic.
+- Escaped user-controlled values in HTML reports and qualified methods text so
+  configured constraints are not presented as achieved without QC verification.
+
+### Study allocation and software reuse
+- This release provides a reusable allocation tool. A study should cite its actual
+  allocation configuration and saved assignment record separately from the software
+  release; installing this version does not reconstruct a study allocation.
+
+---
+
+## [1.2.0] - 2026-02-26
+### Added
+- Pre-randomization QC gate bound to active method/stratification/constraint settings.
+- Deterministic blinding export workflow:
+  - `*_blinded.csv`
+  - `*_blinding_key.csv`
+- Methods-ready manuscript text section in HTML report.
+- CLI/GUI interoperability bundle integration for blinded outputs.
+
+### Changed
+- Package/application/project default version markers moved to `1.2.0`.
+
 ## [1.0.0] - 2026-02-18
 ### Added
 - Professional Windows-focused desktop UI refresh aligned with Neuroprocessing website style.

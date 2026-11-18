@@ -1,13 +1,13 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "animal-randomizer"
-version = "1.0.0"
+name = "Neuroprocessing Randomizer"
+version = "1.2.1rc1"
 description = "Neuroprocessing Randomizer: reproducible animal group allocation with auditable workflows."
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
 requires-python = ">=3.10"
 
 authors = [

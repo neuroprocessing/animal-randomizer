@@ -81,5 +81,5 @@ class ProjectModel:
     stats: Dict[str, Any] = field(default_factory=dict)
     warnings: List[str] = field(default_factory=list)
     hashes: Dict[str, str] = field(default_factory=dict)
-    software_version: str = "0.3.0"
+    software_version: str = "1.2.1rc1"
     build_date: str = field(default_factory=lambda: datetime.now(timezone.utc).date().isoformat())

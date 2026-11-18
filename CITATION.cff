@@ -2,12 +2,10 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "Animal Randomizer"
 authors:
-- family-names: Mirzakhani
-  given-names: Ali
-orcid: https://orcid.org/0009-0002-5056-2792
-title: "Animal Randomizer"
-version: Animal_andomizer_V0.3.0
-date-released: 2026-02-18
+- family-names: "Mirzakhani"
+  given-names: "Ali"
+  orcid: "https://orcid.org/0009-0002-5056-2792"
+version: "1.2.1-rc1"
 type: software
 
 repository-code: "https://github.com/neuroprocessing/animal-randomizer"

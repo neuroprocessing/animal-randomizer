@@ -42,6 +42,8 @@ Generated rows stay editable.
 - `allocation.tsv` (Origin/general pipelines)
 - `allocation_grouped_for_prism.csv`
 - `allocation_weights_for_prism.csv`
+- `allocation_blinded.csv`
+- `allocation_blinding_key.csv`
 - `allocation_report.html`
 - `study.nprj`
 
@@ -49,3 +51,12 @@ After export, the app shows an Export Summary window with:
 
 - file-type guidance
 - method-specific article wording guidance
+
+## QC Gate
+
+Before randomization, the app checks required fields based on selected strategy/constraints.
+Examples:
+
+- stratifying by `sex` requires sex values
+- weight balancing requires weight values
+- cage balancing/limits require cage values

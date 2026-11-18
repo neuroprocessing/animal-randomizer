@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from pathlib import Path
+import random
 from typing import Any, Dict, List
 
 import pandas as pd
@@ -11,11 +12,18 @@ from .validation import normalize_sex_value
 
 
 def animals_from_dataframe(df: pd.DataFrame) -> List[AnimalRecord]:
-    required = {"Animal ID", "Animal_ID", "animal_id"}
+    # Keep this order stable across Python processes.  If a workbook contains
+    # multiple aliases, reject it unless their populated values agree.
+    required = ("Animal ID", "Animal_ID", "animal_id")
     available = set(df.columns)
-    col = next((c for c in required if c in available), None)
-    if col is None:
+    candidates = [c for c in required if c in available]
+    if not candidates:
         raise ValueError("Input file must include an Animal ID column")
+    col = candidates[0]
+    if len(candidates) > 1:
+        canonical = df[candidates].fillna("").astype(str).apply(lambda s: s.str.strip())
+        if not canonical.apply(lambda row: len({value for value in row if value}) <= 1, axis=1).all():
+            raise ValueError("Multiple Animal ID columns disagree; keep one canonical ID column.")
 
     rows: List[AnimalRecord] = []
     for _, row in df.iterrows():
@@ -102,11 +110,66 @@ def assignments_to_dict(assignments: List[AssignmentRecord]) -> List[Dict[str, A
     return [asdict(a) for a in assignments]
 
 
+def export_blinding_files(
+    assignments: List[AssignmentRecord],
+    output_dir: str | Path,
+    seed: int,
+    stem: str = "allocation",
+) -> Dict[str, Path]:
+    """
+    Export blinded allocation and unblinded key files using deterministic shuffling.
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    rng = random.Random(seed + 9173)
+    animal_ids = sorted({row.animal_id for row in assignments})
+    groups = sorted({row.group for row in assignments})
+
+    blind_labels = [f"BLD_{i:04d}" for i in range(1, len(animal_ids) + 1)]
+    rng.shuffle(blind_labels)
+    animal_to_blind = dict(zip(animal_ids, blind_labels))
+
+    group_codes = [f"T{i+1}" for i in range(len(groups))]
+    rng.shuffle(group_codes)
+    group_to_code = dict(zip(groups, group_codes))
+
+    blinded_rows: list[dict[str, str]] = []
+    key_rows: list[dict[str, str]] = []
+    for row in assignments:
+        blinded_rows.append(
+            {
+                "Animal_ID": row.animal_id,
+                "Blind_ID": animal_to_blind[row.animal_id],
+                "Blind_Group_Code": group_to_code[row.group],
+            }
+        )
+        key_rows.append(
+            {
+                "Animal_ID": row.animal_id,
+                "Group": row.group,
+                "Blind_ID": animal_to_blind[row.animal_id],
+                "Blind_Group_Code": group_to_code[row.group],
+            }
+        )
+
+    blinded_path = output_dir / f"{stem}_blinded.csv"
+    key_path = output_dir / f"{stem}_blinding_key.csv"
+    pd.DataFrame(blinded_rows).to_csv(blinded_path, index=False, encoding="utf-8-sig")
+    pd.DataFrame(key_rows).to_csv(key_path, index=False, encoding="utf-8-sig")
+
+    return {
+        "blinded": blinded_path,
+        "blinding_key": key_path,
+    }
+
+
 def export_interop_bundle(
     assignments: List[AssignmentRecord],
     animals: List[AnimalRecord],
     output_dir: str | Path,
     stem: str = "allocation",
+    seed: int | None = None,
 ) -> Dict[str, Path]:
     """
     Export an interoperability bundle suitable for Excel, Prism, and Origin.
@@ -145,11 +208,16 @@ def export_interop_bundle(
                 .reset_index(drop=True)
             )
             grouped_weights.to_csv(weights_grouped_path, index=False, encoding="utf-8-sig")
+        else:
+            pd.DataFrame().to_csv(weights_grouped_path, index=False, encoding="utf-8-sig")
 
-    return {
+    paths = {
         "csv": csv_path,
         "xlsx": xlsx_path,
         "tsv": tsv_path,
         "prism_grouped": prism_grouped_path,
         "prism_weights_grouped": weights_grouped_path,
     }
+    if seed is not None:
+        paths.update(export_blinding_files(assignments, output_dir=output_dir, seed=seed, stem=stem))
+    return paths

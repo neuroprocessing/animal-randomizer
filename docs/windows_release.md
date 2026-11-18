@@ -1,9 +1,9 @@
-# Windows Release Guide (v1.0.0)
+# Windows Release Guide (v1.2.1-rc1)
 
 ## Build executable
 
 ```powershell
-cd C:\Users\Ali\Documents\GitHub\animal-randomizer
+cd <path-to-cloned-repository>\animal-randomizer
 powershell -ExecutionPolicy Bypass -File .\scripts\build_windows.ps1
 ```
 
@@ -19,7 +19,7 @@ Generated output:
 
 Generated setup:
 
-- `dist\installer\NeuroprocessingRandomizer-Setup-v1.0.0.exe`
+- `dist\installer\NeuroprocessingRandomizer-Setup-v1.2.1-rc1.exe`
 
 ## Release checklist
 
@@ -28,7 +28,14 @@ Generated setup:
 3. Validate automated animal list generation and editable table behavior.
 4. Validate export summary window and output files.
 5. Validate CLI sample command.
-6. Run tests: `python -m pytest -q`.
+6. Run tests in a clean environment (PowerShell):
+
+   ```powershell
+   $env:PYTHONPATH = "src"
+   $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1"
+   python -m pytest -q
+   ```
+
 7. Package setup/zip assets for GitHub Releases.
 8. Attach release notes from `Changelog.md` and README "What's New".
 
