@@ -1,10 +1,12 @@
 #define MyAppName "Neuroprocessing Randomizer"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.2.1-rc1"
 #define MyAppPublisher "Neuroprocessing"
 #define MyAppURL "https://github.com/neuroprocessing/animal-randomizer"
 #define MyAppExeName "NeuroprocessingRandomizer.exe"
 
 [Setup]
+; Resolve input and output paths from the project root, not scripts/.
+SourceDir=..
 AppId={{E1B0D23D-3D4E-47AE-9A9F-3A9E4E2A9F10}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
@@ -17,7 +19,7 @@ DefaultGroupName=Neuroprocessing Randomizer
 DisableProgramGroupPage=yes
 LicenseFile=LICENSE
 OutputDir=dist\installer
-OutputBaseFilename=NeuroprocessingRandomizer-Setup-v1.0.0
+OutputBaseFilename=NeuroprocessingRandomizer-Setup-v1.2.1-rc1
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern

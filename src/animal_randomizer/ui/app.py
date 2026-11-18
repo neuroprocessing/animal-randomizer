@@ -106,7 +106,7 @@ def launch() -> None:
             splash = QSplashScreen(pixmap)
             splash.setWindowFlag(Qt.WindowType.FramelessWindowHint, True)
             splash.showMessage(
-                "Neuroprocessing Randomizer v1.0.0",
+                "Neuroprocessing Randomizer v1.2.1-rc1",
                 Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignHCenter,
                 QColor("#EAF8FF"),
             )

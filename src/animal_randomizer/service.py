@@ -8,7 +8,12 @@ from .hashing import sha256_of
 from .models import ProjectModel, RandomizationArtifacts
 from .randomization import randomize
 from .stats import compute_statistics
-from .validation import validate_animals
+from .validation import (
+    run_qc_gate,
+    validate_animals,
+    validate_assignments,
+    validate_constraints,
+)
 
 
 class RandomizerService:
@@ -18,8 +23,19 @@ class RandomizerService:
     def run(self, project: ProjectModel) -> RandomizationArtifacts:
         validate_animals(project.animals)
         self.audit.record("validation", {"animals": len(project.animals)})
+        run_qc_gate(project.animals, project.config)
+        self.audit.record(
+            "qc_gate",
+            {
+                "method": project.config.method,
+                "stratify_by": list(project.config.stratify_by),
+                "constraints": asdict(project.config.constraints),
+            },
+        )
 
         assignments, seed = randomize(project.animals, project.config)
+        validate_assignments(project.animals, assignments, project.config)
+        validate_constraints(project.animals, assignments, project.config)
         project.config.seed = seed
         self.audit.record("randomization", {"method": project.config.method, "seed": seed})
 

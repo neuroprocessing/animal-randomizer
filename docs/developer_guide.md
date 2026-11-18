@@ -10,6 +10,7 @@
 - `io_handlers.py`: import/export + interoperability bundle
 - `ui/app.py`: branded startup + Welcome window
 - `ui/main_window.py`: PyQt6 wizard GUI
+- `validation.py`: schema validation + QC gate
 
 ## Running tests
 
@@ -24,3 +25,5 @@ python -m pytest -q
 - Business logic is isolated from UI for future integration.
 - GUI supports automated list generation and constrained manual editing.
 - Export layer targets Excel, Prism, and Origin interoperability.
+- QC gate blocks incompatible/missing metadata before randomization runs.
+- Blinding exports provide experimenter-facing and restricted key files.

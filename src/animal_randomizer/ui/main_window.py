@@ -83,6 +83,8 @@ class ExportSummaryDialog(QDialog):
           <li><b>CSV/XLSX</b>: primary allocation tables for Excel and lab records.</li>
           <li><b>TSV</b>: tab-delimited format for Origin and generic analysis pipelines.</li>
           <li><b>Prism grouped CSVs</b>: direct group-wise import for GraphPad Prism analysis/plots.</li>
+          <li><b>Blinded CSV</b>: experimenter-facing file with blind IDs and coded groups.</li>
+          <li><b>Blinding Key CSV</b>: restricted file mapping blind codes back to true groups.</li>
           <li><b>HTML report</b>: human-readable summary with seed, hashes, assignments, and warnings.</li>
           <li><b>.nprj</b>: full reproducibility snapshot (metadata, config, logs, results).</li>
         </ul>
@@ -212,7 +214,7 @@ class MainWindow(QMainWindow):
 
         title = QLabel("Neuroprocessing")
         title.setObjectName("navTitle")
-        subtitle = QLabel("Animal Randomizer v1.0.0")
+        subtitle = QLabel("Animal Randomizer v1.2.1-rc1")
         subtitle.setObjectName("navSubtitle")
         layout.addWidget(title)
         layout.addWidget(subtitle)
@@ -721,14 +723,19 @@ class MainWindow(QMainWindow):
         date_edit = QDateEdit()
         date_edit.setCalendarPopup(True)
         date_edit.setDisplayFormat("yyyy-MM-dd")
-        date_edit.setDate(QDate.currentDate())
-        date_edit.setToolTip("Select date from calendar or keep today.")
+        missing_date = QDate(1900, 1, 1)
+        date_edit.setMinimumDate(missing_date)
+        date_edit.setSpecialValueText("Missing / unspecified")
+        date_edit.setDate(missing_date)
+        date_edit.setToolTip("Select a date, or leave Missing / unspecified; no date is filled automatically.")
         if value:
             parsed = QDate.fromString(value, "yyyy-MM-dd")
             if not parsed.isValid():
                 parsed = QDate.fromString(value, Qt.DateFormat.ISODate)
             if parsed.isValid():
                 date_edit.setDate(parsed)
+            else:
+                raise ValueError(f"Invalid date value: {value}")
         self.animals_table.setCellWidget(row, col, date_edit)
 
     def generate_auto_animals(self) -> None:
@@ -812,6 +819,8 @@ class MainWindow(QMainWindow):
                 if isinstance(widget, QComboBox):
                     return widget.currentText().strip()
                 if isinstance(widget, QDateEdit):
+                    if widget.date() == QDate(1900, 1, 1):
+                        return ""
                     return widget.date().toString("yyyy-MM-dd")
                 item = self.animals_table.item(r, c)
                 return "" if item is None else item.text().strip()
@@ -922,6 +931,7 @@ class MainWindow(QMainWindow):
             animals=self.project.animals,
             output_dir=out_dir,
             stem="allocation",
+            seed=self.project.config.seed,
         )
         report_path = generate_html_report(self.project, out_dir / "allocation_report.html")
         project_path = out_dir / "study.nprj"
@@ -933,6 +943,8 @@ class MainWindow(QMainWindow):
             ("Allocation TSV", bundle["tsv"]),
             ("Prism Grouped IDs", bundle["prism_grouped"]),
             ("Prism Grouped Weights", bundle["prism_weights_grouped"]),
+            ("Blinded Allocation", bundle["blinded"]),
+            ("Blinding Key (Restricted)", bundle["blinding_key"]),
             ("HTML Report", report_path),
             ("Project Snapshot", project_path),
         ]

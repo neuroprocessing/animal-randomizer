@@ -52,7 +52,7 @@ def load_project(path: str | Path) -> ProjectModel:
         stats=payload.get("stats", {}),
         warnings=list(payload.get("warnings", [])),
         hashes=payload.get("hashes", {}),
-        software_version=payload.get("software_version", "0.3.0"),
+        software_version=payload.get("software_version", "1.2.1rc1"),
         build_date=payload.get("build_date", ""),
     )
     return model
