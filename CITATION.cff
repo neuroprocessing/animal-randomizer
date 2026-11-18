@@ -1,16 +1,15 @@
+
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "Animal Randomizer"
+title: "Neuroprocessing Randomizer"
 authors:
-- family-names: "Mirzakhani"
-  given-names: "Ali"
-  orcid: "https://orcid.org/0009-0002-5056-2792"
+  - family-names: "Mirzakhani"
+    given-names: "Ali"
+    orcid: "https://orcid.org/0009-0002-5056-2792"
 version: "1.2.1-rc1"
 type: software
-
 repository-code: "https://github.com/neuroprocessing/animal-randomizer"
 url: "https://github.com/neuroprocessing/animal-randomizer"
-
 keywords:
   - neuroscience
   - animal studies
@@ -20,5 +19,4 @@ keywords:
   - experimental design
   - behavioral neuroscience
   - open science
-
-license: MIT
+license: GPL-3.0-only
